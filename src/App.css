@@ -1,0 +1,83 @@
+/* style for my website :D*/
+.App {
+  text-align: center;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+button {
+  color: rgb(0, 0, 0);
+  width: 40%;
+  background-color: rgba(255, 255, 255, 0.661);
+  font-size: auto;
+  font-weight: 1000;
+  box-shadow: black 5px 5px;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Kanji {
+  font-size: 150px;
+}
+.Latinka {
+  font-size: 100px;
+}
+
+.GameOver {
+  padding: 50px;
+}
+.GameOver-dark {
+  background-color: #282c34;
+  border: solid black;
+  border-style: double;
+  border-width: 15px;
+  padding: 20px;
+}
+.GameOver-light {
+  background-color: rgb(196, 196, 196);
+  border: solid black;
+  border-style: double;
+  border-width: 15px;
+  padding: 20px;
+  color: black;
+}
+
+#KanjiButton {
+  font-size: 30px;
+  font-weight: 500;
+  width: 20%;
+}
+#refresh {
+  width: 70%;
+  padding: 5px;
+}
+
+#MenuButton {
+  font-weight: 400;
+  font-size: large;
+  margin: 5px;
+}

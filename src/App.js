@@ -5,7 +5,6 @@ import useSound from "use-sound";
 import mySound from "./minecraft_click_ver_2.mp3"
 
 
-
 //randomize array kanji
 const randomKanjis = kanji.sort((a, b) => 0.5 - Math.random());
 
@@ -21,7 +20,72 @@ export default function App() {
   const [darkTheme, setDarkTheme] = useState(true);
   const [playSound] = useSound(mySound)
 
+  const [ownStudy,setOwnStudy] = useState(false);
+  const [cards, setCards] = useState([]);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const front = e.target.front.value;
+    const back = e.target.back.value;
+    const newCard = { front, back };
+    setCards([...cards, newCard]);
+    // save card to folder here
+    e.target.reset();
+  }
+  function StudySession({ cards }) {
+    const [index, setIndex] = useState(0);
+    const [learnedCards, setLearnedCards] = useState([]);
+    const [showBack, setShowBack] = useState(false);
+  
+    function handleLearned() {
+      setLearnedCards([...learnedCards, index]);
+      setIndex(index + 1);
+      setShowBack(false);
+    }
+  
+    function handleNotLearned() {
+      setIndex(index + 1);
+      setShowBack(false);
+    }
+  
+    function handleFlip() {
+      setShowBack(!showBack);
+    }
+  
+    function handleReset() {
+      setIndex(0);
+      setLearnedCards([]);
+    }
+return (
+  <div>
+      {cards.length > 0 ? (
+        <div>
+          <h2>Study session</h2>
+          {index < cards.length ? (
+            <div>
+             
+              <button onClick={handleFlip}>
+                {showBack ? <p>{cards[index].back}</p> : <p>{cards[index].front}</p>} 
+              </button>
+              <p></p>
+              <button onClick={handleLearned}>Learned</button>
+              <button onClick={handleNotLearned}>Not learned</button>
+            </div>
+          ) : (
+            <div>
+              <h3>Session complete</h3>
+              <p>You learned {learnedCards.length} out of {cards.length} cards</p>
+              <button onClick={handleReset}>Start over</button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <p>No cards to study</p>
+      )}
+    </div>
+);
+}
+  
   //for play type 1
   const correctAnswer = currentRandomKanji.name;
   const badAnswer1 =
@@ -119,7 +183,7 @@ export default function App() {
                   <div className="menu">
 
 
-                    <h1>MENU</h1>
+                    <h1>THE BIG KANJI</h1>
                     <p id="question">WHAT TYPE OF LECTURE DO YOU WANT?</p>
 
 
@@ -134,6 +198,7 @@ export default function App() {
                       kanji / latinka
                     </button>
 
+
                     <button
                       id="MenuButton"
                       onClick={() => {
@@ -144,13 +209,22 @@ export default function App() {
                     >
                       latinka / kanji
                     </button>{" "}
+
+                    <button id="" onClick={() => {
+                      playSound();
+                      setPlay(true);
+                      setOwnStudy(true);
+                    }}> Own study
+                    </button>
                     <p></p>
+
                     <button onClick={() => {
                       setDarkTheme(!darkTheme)
                       check();
                       playSound();
                     }}>{buttonTheme} Theme
                     </button>
+
                   </div>
                 </div>
               )}
@@ -276,6 +350,50 @@ export default function App() {
                   </button>
                 </div>
               )}
+              {
+                //Own study time
+              }
+
+              {!gameOver && play && ownStudy && (
+                <>
+                  <div
+                    className={darkTheme ? "GameOver-dark" : "GameOver-light"}
+                  >
+                    <h2>Your own Library</h2>
+
+                    <p></p>
+                    {
+                      //kanji on page
+                    }
+
+                    <p></p>
+                    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Front:
+          <input type="text" name="front" required />
+        </label>
+        <label>
+          Back:
+          <input type="text" name="back" required />
+        </label>
+        <button type="submit">Add card</button>
+      </form>
+      <StudySession cards={cards} />
+    </div>
+                    <button id="refresh" onClick={() => {
+                    refreshPage();
+                    playSound();
+                  }}>
+                    Go back
+                  </button>
+                  <p></p>
+                  </div>
+                </>
+              )}
+
+
+
             </body>
           </>
         </header>
